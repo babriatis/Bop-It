@@ -35,6 +35,74 @@ void setup() {
 void loop() {
   //game turns on
   while(count == 0)
-    if digitalRead(button) == LOW
+  {
+    if (digitalRead(button) == LOW)
+    { count++;}
+  }
+  long noise;
+  int score;
+  bool isCorrect;
+  int delayCount;
+  isCorrect = false;
+  score = 0;
+  delayCount = 0;
+  
+  //start game
+  while(score != 99 || isCorrect == false)
+  {
+    noise = random(1,4);
+    
+    if (noise == 1) //button
+    {
+      tone(speaker, 2500, 1000); //tone(pin, frequency, duration in ms)
+    }
+    else if (noise == 2) //toggle
+    {
+      tone(speaker, 3500,1000);
+    }
+    else  //noise == 3, slide
+    {
+      tone(speaker,4500,1000);
+    }
+    
+    while(delayCount<100 && isCorrect == false)
+    {
+      toggleVal = digitalRead(toggle);
       
+      //call function to determine correct input
+      isCorrect = readInput(noise, toggleVal)
+      delay(10); //10 milliseconds
+      delayCount++;
+    }
+  
+      
+}
+
+bool readInput(int noise, int toggleVale){
+  bool isCorrect;
+  int buttonVal;
+  int toggleVal2;
+  double slideVal;
+  
+  buttonVal = digitalRead(button);
+  toggleVal2 = digitalRead(toggle);
+  
+  if(noise == 1 && buttonVal == LOW)
+  {
+    isCorrect = true;
+  }
+  else if(noise == 2 && toggleVal2 != toggleVal)
+  {
+    isCorrect = true;
+  }
+  else if(noise == 3 && )
+  {
+    isCorrect = true;
+  }
+  else
+  {
+    isCorrect = false
+  }
+  
+  return isCorrect;
 }
